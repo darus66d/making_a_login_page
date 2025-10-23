@@ -9,6 +9,7 @@ class LoginPage extends StatelessWidget {
 
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final ValueNotifier<bool> isPasswordVisible = ValueNotifier(false);
 
     return Scaffold(
       body: Padding(
@@ -29,10 +30,20 @@ class LoginPage extends StatelessWidget {
               prefixWidget: Icon(Icons.email_outlined),
             ),
             SizedBox(height: 20,),
-            CustomTextField(
-                controller: passwordController,
-                hintText: "Enter your Password",
-                obscureText: true),
+            ValueListenableBuilder(
+              valueListenable: isPasswordVisible,
+              builder: (context,value,child) {
+                return CustomTextField(
+                  controller: passwordController,
+                  hintText: "Enter your Password",
+                  obscureText: !value,
+                  prefixWidget: Icon(Icons.lock_outline),
+                  suffixWidget: IconButton(onPressed: () {
+                    isPasswordVisible.value= !isPasswordVisible.value;
+                  },
+                    icon:Icon( value? Icons.visibility : Icons.visibility_off ,)),
+                );
+              } ),
             SizedBox(height: 10,),
             InkWell(
               onTap: (){
