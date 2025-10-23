@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 50,),
+            SizedBox(height: MediaQuery.of(context).size.height*0.3,),
             Text("Sign up to get free delivery on your first order",style:TextStyle(
               fontSize: 34,
               color: Colors.deepOrange,
@@ -36,12 +36,32 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 10,),
             InkWell(
               onTap: (){
-                
+                _showDialog(context);
               },
               child: Align(
                 alignment: Alignment.bottomRight,
                   child: Text("Forget Password",style: TextStyle(color: Colors.red),)),
             ),
+            SizedBox(height: 20,),
+            InkWell(
+              onTap: (){
+                if(emailController.text.toString() == "DarusSalam"  && passwordController.text.toString() =='1234'){
+                  return debugPrint("Success");
+                }else{
+                  debugPrint("Error");
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.deepOrange
+                ),
+                child: Center(
+                  child: Text("Log in",style: TextStyle(color: Colors.white,fontSize: 18),),
+                ),
+              ),
+            )
 
             // TextFormField(
             //   controller: emailController,
@@ -70,4 +90,24 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showDialog(BuildContext context){
+  showDialog(
+      context: context,
+    builder: (BuildContext context){
+        return AlertDialog(
+          title: Text('Alert'),
+          content: Text("This is simple Alert Dialog"),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                child: Text("ok"))
+          ],
+        );
+    }
+
+  );
 }
